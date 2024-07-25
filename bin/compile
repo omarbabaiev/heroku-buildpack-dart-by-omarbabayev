@@ -30,7 +30,7 @@ export_env_dir() {
 build_pubspec() {
   filename=$1
   message "building $filename"
-  
+
   pub_dir=`dirname $filename`
   message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
   cd $BUILD_DIR/$pub_dir
@@ -38,13 +38,13 @@ build_pubspec() {
   DART_PATH=/app/dart-sdk/bin
   PUB_CACHE_BIN=/app/pub-cache/bin
   export PATH=$PATH:$DART_PATH:$PUB_CACHE_BIN
-  message "*** Running pub get"
+  message "*** Running dart pub get"
 
-  pub --version
+  dart --version
 
   #start pub from the /app folder to have correct symlink paths
-  pub get  
-  
+  dart pub get
+
   dart pub global activate webdev
   if [ -d "web" ]
   then
@@ -52,7 +52,7 @@ build_pubspec() {
     if [[ -z "$DART_BUILD_CMD" ]]
     then
       message 'Building with "webdev build"'
-      webdev build
+      dart pub global run webdev build
     else
       message "Building with \"$DART_BUILD_CMD\""
       eval $DART_BUILD_CMD
